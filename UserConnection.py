@@ -1,4 +1,5 @@
 from Connection import ConnectionSQLite
+from flask import session
 
 class UserConnection:
 
@@ -44,7 +45,7 @@ class UserConnection:
   
   #FITRAR ODEN DE COMPRA
   def filter_orderByIDClient(self):
-    return self.cnx.one_fetch_data("SELECT * FROM orders WHERE id_user = ?", (self.cnx.getUser().id_user,))
+    return self.cnx.one_fetch_data("SELECT * FROM orders WHERE id_user = ?", (session['id_user'],))
   
   
 

@@ -1,0 +1,26 @@
+<div class="container w-50">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+          The current link item
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" aria-current="page" onclick="navegar('{{ url_for('view_user') }}', 'Ver users')">Ver Usuarios</a>
+        <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+        <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+    </div>
+</div>
+<div class="container mt-5" id="content"></div>     
+</div>
+<script>
+function navegar(ruta, titulo) {
+    $.ajaxSetup({ cache: false });
+    $.ajax({
+        type: 'GET',
+        url: ruta,
+        success: function(response) {
+            $('#content').html(response);
+            history.pushState({ path: ruta }, titulo, ruta);
+        }
+    });
+}
+</script>
