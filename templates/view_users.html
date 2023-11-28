@@ -1,31 +1,141 @@
 <div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td><a href="">Delete</a><a href="">Delete</a></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+  <div>
+    <button class="btn btn-primary" type="button"  href="#" data-bs-toggle="modal"
+            data-bs-target="#modalRegistrarUser">Registrar usuario</button>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#ID</th>
+        <th scope="col">username</th>
+        <th scope="col">email</th>
+        <th scope="col">password</th>
+        <th scope="col">fecha</th>
+        <th scope="col">rol</th>
+        <th scope="col">eliminar</th>
+        <th scope="col">modificar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th cope="row">{{user[0]}}</td>
+        <td>{{user[1]}}</td>
+        <td>{{user[2]}}</td>
+        <td>{{user[3]}}</td>
+        <td>{{user[4]}}</td>
+        <td><a href="#"
+            onclick="navegar('{{ url_for('set_rol_user', id_user = user[0], rol = user[5]) }}', 'setear rol usuario')">{{user[5]}}</a>
+        </td>
+        <td><a href="#"
+          onclick="navegar('{{ url_for('delete_user', id_user = user[0]) }}', 'eliminar')">Delete</a>
+        </td>
+        <td><button type="button" id="btmodal" class="nav-link" href="#" data-bs-toggle="modal"
+            data-bs-target="#modalModificarUser" data-username="{{user[1]}}" data-email="{{user[2]}}" data-password="{{user[3]}}"
+            data-date="{{user[4]}}" data-role="{{user[5]}}" data-iduser="{{user[0]}}">Editar</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="modal fade" id="modalModificarUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <h5 class="modal-title" id="exampleModalLabel">Modificar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ url_for('update_user')}}" method="POST">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label" for="username">Nombre Usuario:</label>
+              <input class="form-control" type="text" id="username" name="username">
+              <input type="hidden" id="id_user" name="id_user">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-control" type="email" id="email" name="email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Contraseña</label>
+              <input class="form-control" type="password" id="password" name="password">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="date">Fecha</label>
+              <input class="form-control" type="date" id="date" name="date">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="role">Rol</label>
+              <select class="form-select" aria-label="Default select example" name="role" id="role">
+                <option value="1">1</option>
+                <option value="0">0</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalRegistrarUser" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <h5 class="modal-title" id="exampleModalLabel1">Registrar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ url_for('insert_user')}}" method="POST">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label" for="username">Nombre Usuario:</label>
+              <input class="form-control" type="text" id="username" name="username">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-control" type="email" id="email" name="email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="password">Contraseña</label>
+              <input class="form-control" type="password" id="password" name="password">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="date">Fecha</label>
+              <input class="form-control" type="date" id="date" name="date">
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="role">Rol</label>
+              <select class="form-select" aria-label="Default select example" name="role" id="role">
+                <option value="1">1</option>
+                <option value="0">0</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+<script>
+  $(document).on("click", "#btmodal", function () {
+    var username = $(this).data('username')
+    var email = $(this).data('email')
+    var password = $(this).data('password')
+    var date = $(this).data('date')
+    var role = $(this).data('role')
+    var iduser = $(this).data('iduser')
+
+    $("#username").val(username);
+    $("#email").val(email);
+    $("#password").val(password);
+    $("#date").val(date);
+    $("#role").val(role);
+    $("#id_user").val(iduser);
+
+  })
+</script>

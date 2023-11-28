@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<div class="vh-75">
+    <div class="box">
+        <div class="container_buies px-1 px-sm-5 mx-auto">
+            <form method="post"  autocomplete="off">
+              <div class="flex-row d-flex justify-content-center">
+                <div class="col-lg-6 col-11 px-1">
+                  <div class="input-group input-daterange">
+                    <input type="text" id="start" name="start" class="form-control text-left mr-2">
+                    <label class="ml-3 form-control-placeholder" id="start-p" for="start">Start Date</label>
+                    <span class="fa fa-calendar" id="fa-1"></span>
+                    <input type="text" id="end" name="end" class="form-control text-left ml-2">
+                    <label class="ml-3 form-control-placeholder" id="end-p" for="end">End Date</label>
+                    <span class="fa fa-calendar" id="fa-2"></span>
+                  </div>
+                </div>
+                <div class="mt-3">
+                    <button type="button" onclick="buscar()" class="btn btn-primary mr-2">Buscar</button>  
+                </div>
+              </div>             
+            </form>
+         
+          </div>  
+    </div>
+    <div id="resultado_busqueda">
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script>
+    // Función para realizar la búsqueda mediante AJAX
+    function buscar() {
+        var startDate = document.getElementById("start").value;
+        var endDate = document.getElementById("end").value;
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ url_for("detail_buies") }}',
+            data: {
+                'start': startDate,
+                'end': endDate
+            },
+            success: function (response) {
+                // Actualizar el contenido dinámicamente
+                $('#resultado_busqueda').html(response);
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+    }
+
+    // Función para inicializar el Datepicker
+    function inicializarDatepicker() {
+        $('.input-daterange').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            calendarWeeks: true,
+            clearBtn: true,
+            disableTouchKeyboard: true
+        });
+    }
+
+    // Ejecutar funciones cuando el documento esté listo
+    $(document).ready(function () {
+        inicializarDatepicker();
+
+        // Puedes agregar más funciones o lógica aquí si es necesario
+    });
+</script>

@@ -84,11 +84,25 @@ class ConnectionSQLite(object):
     def delete_user(self, id):
         self.execute_query("DELETE FROM user WHERE id_user=?", (id, ))
 
-    
+
+    #setear rol de usuario
+    def set_rol_user(self, id, rol):
+        self.execute_query("UPDATE user SET role = ? WHERE id_user = ?", (rol, id))
+     
+
     #FITRAR ODEN DE COMPRA
     def filter_orderByIDClient(self):
         return self.one_fetch_data("SELECT * FROM orders WHERE id_user = ?", (session['id_user'],))
     
+    
+    #SETEAR PRECIO TOTAL Y STATUS DE COMPRA EN LA TABLA ORDER (ORDEN DE COMPRA)
+    def set_pricetot_status_oder(self, price_tot, status, id_ord):
+        return self.execute_query("UPDATE orders SET price_tot = ?, status = ? WHERE id_ord = ?", (price_tot, status, id_ord))
+    
+    
+    #FILTRAR POR FECHA ORDEN
+    def filter_bydate_orders(self, startdate, enddate):
+        return self.fetch_data("SELECT orders.id_ord,user.username,orders.price_tot,orders.status,orders.date,deatail.price,deatail.quantity,product.name FROM orders inner join user on user.id_user = orders.id_user inner join deatail on orders.id_ord =  deatail.id_ord inner join product on deatail.id_product = product.id_product WHERE orders.date between ? and ?", (startdate, enddate))
     
 
     def insert_detail(self, detail):
@@ -98,8 +112,8 @@ class ConnectionSQLite(object):
 
 
     def insert_order(self, ord):
-        values = (ord.quantity, ord.date, ord.status, ord.id_user)
-        query =  '''INSERT INTO orders (quantity, date, status, id_user) VALUES (?, ?, ?, ?)'''
+        values = (ord.price, ord.date, ord.status, ord.id_user)
+        query =  '''INSERT INTO orders (price_tot, date, status, id_user) VALUES (?, ?, ?, ?)'''
         self.execute_query(query, values)
 
 
@@ -135,6 +149,11 @@ class ConnectionSQLite(object):
     #ELIMINAR PRODUCTO 
     def delete(self, id):
         self.execute_query("DELETE FROM product WHERE id_product=?", (id, ))
+
+    
+    #EDITAR STOCK DEL PRODUCTO 
+    def edit_stock_product(self, stock, id):
+        self.execute_query("UPDATE product SET stock = ? WHERE id_product = ?", (stock, id))
 
 
     #TRAER CATEGORIAS 

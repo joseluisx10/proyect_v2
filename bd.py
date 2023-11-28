@@ -42,7 +42,7 @@ class CreateTables:
   def create_table_order(self):
     return '''CREATE TABLE IF NOT EXISTS orders (
       id_ord INTEGER PRIMARY KEY AUTOINCREMENT,
-      quantity INT,
+      price_tot FLOAT,
       date DATETIME,
       status INT,
       id_user INT REFERENCES user(id_user)

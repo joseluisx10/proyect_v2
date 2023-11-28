@@ -3,7 +3,7 @@ import re
 class User:
   
   def __init__(self, id_user, username , email, password, date, role):
-    self.id_user = id_user 
+    self.id_user = int(id_user) 
     try:
       self.username = username
     except Exception as e:

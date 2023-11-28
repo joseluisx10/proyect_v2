@@ -1,0 +1,36 @@
+
+{% if list_orders|length > 0 %}
+<div class="">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">username</th>
+            <th scope="col">status</th>
+            <th scope="col">fecha</th>
+            <th scope="col">Precio</th>
+            <th scope="col">cantidad</th>
+            <th scope="col">Nombre Producto</th>
+            <th scope="col">Precio Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in list_orders %}
+          <tr>
+            <th cope="row">{{order[0]}}</td>
+            <td>{{order[1]}}</td>
+            <td>{{order[3]}}</td>
+            <td>{{order[4]}}</td>
+            <td>{{order[5]}}</td>
+            <td>{{order[6]}}</td>
+            <td>{{order[7]}}</td> 
+            <td>{{order[2]}}</td>        
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% else %}
+<div>
+    <p class="h5">Aun no tiene registrado orden</p>
+</div>
+{% endif %}
