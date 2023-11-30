@@ -5,6 +5,7 @@ import datetime
 from User import User
 from Order import Order
 from Detail import Detail
+from Product import Product
 from flask import Flask, render_template, request, redirect, url_for, session
 
 
@@ -23,7 +24,19 @@ def main():
     session['msj'] = None
     return render_template('menu.html', msj = msj)
   return render_template('menu.html', msj= msj)
-    
+
+
+@app.route('/register',  methods=['GET', 'POST'])
+def register():
+  if request.method == 'POST':
+    username = request.form['user']
+    email = request.form['email']
+    password = request.form['password']
+    user = User(1, username, email, password, datetime.date.today(), 0)
+    cnx.insert_user(user)
+    return render_template('index.html')
+  return render_template('register.html')
+  
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_app():
@@ -54,7 +67,7 @@ def login_app():
         return render_template('index.html', Message= Message)
   else:
 
-    return render_template('index.html')
+    return render_template('index.html', Message = Message)
 
 
 @app.route('/view_product')
@@ -178,6 +191,53 @@ def insert_detail():
   return redirect(url_for('main'))
 
 
+@app.route('/abm_products')
+def abm_products():
+  products = cnx.product_findall()
+  categorys = cnx.category_findall()
+  return render_template('abm_products.html', products=products, categorys=categorys)
+
+
+@app.route('/insert_product', methods = ['GET','POST'])
+def insert_product():
+    name = request.form['name']
+    description = request.form['description']
+    ingredients = request.form['ingredients']
+    inf_nutrition = request.form['inf_nutrition']
+    price = request.form['price']
+    stock= request.form['stock']
+    date = request.form['date']
+    ranking = request.form['ranking']
+    id_category = request.form['id_category']
+    product = Product(None, name, description, ingredients, inf_nutrition, price, stock, date, ranking, id_category)
+    cnx.insert_product(product)
+    return redirect(url_for('main'))
+
+
+@app.route('/update_product', methods=['GET', 'POST'])
+def update_product():
+  if request.method == 'POST':
+    name = request.form['name']
+    description = request.form['description']
+    ingredients = request.form['ingredients']
+    inf_nutrition = request.form['inf_nutrition']
+    price = request.form['price']
+    stock= request.form['stock']
+    date = request.form['date']
+    ranking = request.form['ranking']
+    id_product = int(request.form['id_product'])
+    id_category = request.form['id_category']
+    product = Product(id_product, name, description, ingredients, inf_nutrition, price, stock, date, ranking, id_category)
+    cnx.edit(id_product, product)
+    return redirect(url_for('main'))
+
+
+@app.route('/delete_product')
+def delete_product():
+  id_product = int(request.args.get('id_product'))
+  cnx.delete(id_product)
+  return redirect(url_for('main'))
+
 
 @app.route('/finalize_buies')
 def finalize_buies():
@@ -219,7 +279,7 @@ def detail_buies():
 def close_session():
   session.clear()
   cnx.cleanDetail()
-  return redirect(url_for('main'))
+  return render_template('index.html')
 
 if __name__ == "__main__":
   app.debug = True

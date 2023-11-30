@@ -23,8 +23,13 @@
                       <input type="password" class="form-control" id="password" name="password">
                     </div>
                     <div class="mb-3">
-                       <div class="form-text"><a href="">Desea Registrarse?</a></div>
+                       <div class="form-text"><a href="{{url_for('register') }}">Desea Registrarse?</a></div>
                     </div>
+                  <div class="mb-3">
+                    <span  role="alert">
+                        <strong>{{ Message }}</strong>
+                    </span>
+                  </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </form>     
             </div>

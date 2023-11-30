@@ -1,0 +1,240 @@
+<div class="container mt-3">
+    <div>
+        <button class="btn btn-primary" type="button" href="#" data-bs-toggle="modal"
+            data-bs-target="#modalModificarInsertProduct">Registrar usuario</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Ingredientes</th>
+                <th scope="col">Información Nutricional</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Fecha de Registro</th>
+                <th scope="col">Ranking</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">eliminar</th>
+                <th scope="col">modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <th cope="row">{{product[0]}}</td>
+                <td>{{product[1]}}</td>
+                <td>{{product[2]}}</td>
+                <td>{{product[3]}}</td>
+                <td>{{product[4]}}</td>
+                <td>{{product[5]}}</td>
+                <td>{{product[6]}}</td>
+                <td>{{product[7]}}</td>
+                <td>{{product[8]}}</td>
+                <td>{{product[9]}}</td>
+
+                <td> <a href="#" class="nav-link"
+                        onclick="navegar('{{ url_for('delete_product', id_product = product[0]) }}', 'Eliminar')">Eliminar</a>
+                </td>
+                <td><button type="button" id="btmodal" class="nav-link" href="#" data-bs-toggle="modal"
+                        data-bs-target="#modalModificarProduct" data-name="{{product[1]}}"
+                        data-description="{{product[2]}}" data-ingredients="{{product[3]}}"
+                        data-inf_nutrition="{{product[4]}}" data-price="{{product[5]}}" data-stock="{{product[6]}}"
+                        data-date="{{product[7]}}" data-ranking="{{product[8]}}" data-id_category="{{product[9]}}"
+                        data-idproduct="{{product[0]}}">Editar</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="modal fade" id="modalModificarProduct" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url_for('update_product')}}" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Nombre:</label>
+                            <input class="form-control" type="text" id="name" name="name" required>
+                            <input type="hidden" id="id_product" name="id_product">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Descripción:</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ingredients">Ingredientes:</label>
+                            <textarea class="form-control" id="ingredients" name="ingredients" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inf_nutrition">Información Nutricional:</label>
+                            <textarea class="form-control" id="inf_nutrition" name="inf_nutrition" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price">Precio:</label>
+                            <input class="form-control" type="text" id="price" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="stock">Stock:</label>
+                            <input class="form-control" type="text" id="stock" name="stock" required><br>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="date">Fecha:</label>
+                            <input class="form-control" type="date" id="date" name="date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="ranking">Ranking:</label>
+                            <input class="form-control" type="text" id="ranking" name="ranking">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="id_category">ID de Categoría:</label>
+                            <select class="form-control" name="id_category" id="id_category">
+                                {% for category in categorys %}
+                                <option value="{{ category[0] }}">{{ category[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalModificarInsertProduct" tabindex="-1" aria-labelledby="exampleModalLabe2"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <h5 class="modal-title" id="exampleModalLabel2">Modificar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url_for('insert_product')}}" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Nombre:</label>
+                            <input class="form-control" type="text" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Descripción:</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ingredients">Ingredientes:</label>
+                            <textarea class="form-control" id="ingredients" name="ingredients" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inf_nutrition">Información Nutricional:</label>
+                            <textarea class="form-control" id="inf_nutrition" name="inf_nutrition" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price">Precio:</label>
+                            <input class="form-control" type="text" id="price" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="stock">Stock:</label>
+                            <input class="form-control" type="text" id="stock" name="stock" required><br>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="date">Fecha:</label>
+                            <input class="form-control" type="date" id="date" name="date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="ranking">Ranking:</label>
+                            <input class="form-control" type="text" id="ranking" name="ranking">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="id_category">ID de Categoría:</label>
+                            <select class="form-control" name="id_category" id="id_category">
+                                {% for category in categorys %}
+                                <option value="{{ category[0] }}">{{ category[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+    $(document).on("click", "#btmodal", function () {
+        var name = $(this).data('name')
+        var description = $(this).data('description')
+        var ingredients = $(this).data('ingredients')
+        var inf_nutrition = $(this).data('inf_nutrition')
+        var price = $(this).data('price')
+        var stock = $(this).data('stock')
+        var date = $(this).data('date')
+        var ranking = $(this).data('ranking')
+        var id_category = $(this).data('id_category')
+        var idproduct = $(this).data('idproduct')
+
+
+
+        $("#name").val(name);
+        $("#description").val(description);
+        $("#ingredients").val(ingredients);
+        $("#inf_nutrition").val(inf_nutrition);
+        $("#price").val(price);
+        $("#stock").val(stock);
+        $("#date").val(date);
+        $("#ranking").val(ranking);
+        $("#id_category").val(id_category);
+        $("#id_product").val(idproduct);
+
+
+    })
+
+    function Validar() {
+        var errorS = document.getElementById("Errorsalario");
+        var errorN = document.getElementById("Errornombre");
+        var nombre = document.getElementById("nombre").value;
+        var salario = document.getElementById("salario").value;
+        var validador = true;
+
+        if (nombre == "") {
+            errorN.style = "display:block";
+            validador = false;
+        } else {
+            errorN.style = "display:none";
+            validador = true;
+        }
+
+
+
+        if (salario == "") {
+            errorS.style = "display:block";
+            validador = false;
+        } else {
+            errorS.style = "display:none";
+            validador = true;
+        }
+        if (validador == true) {
+            var formulario = document.getElementById("formulario");
+            formulario.submit()
+        }
+
+
+
+
+    }
+</script>
