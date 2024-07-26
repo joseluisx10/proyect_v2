@@ -45,6 +45,10 @@ class ConnectionSQLite(object):
     def getListDetail(self):
         return self.detail
     
+    def removeProductoDetail(self, value):
+        if(value in self.detail):
+            self.detail.remove(value)
+    
     def cleanDetail(self):
         self.detail = []
 

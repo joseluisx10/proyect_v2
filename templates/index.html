@@ -20,31 +20,42 @@
   }
 
 
-.btn-form {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
+  .btn-form {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
 
-.btn-form:hover {
-  opacity: 1;
-}
+  .btn-form:hover {
+    opacity: 1;
+  }
 </style>
 
-<body class="bg-light">
+<body class="">
   <header>
     <nav class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
       <a class="w3-bar-item w3-button" href="">logo</a>
       <div class="w3-right w3-hide-small">
-        <a href="{{ url_for('main') }}" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Inicio</a>
-        <a href="#about" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Acerca de Nosotros</a>
-        <a href="#menu" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Menu</a>
-        <a href="#contacto" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Contacto</a>
-        <a href="{{ url_for('login_app') }}" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
+        <a href="{{ url_for('main') }}"
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Inicio</a>
+        <a href="#about"
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Acerca de
+          Nosotros</a>
+        <a href="#menu"
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Menu</a>
+        <a href="#contacto"
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Contacto</a>
+        {% if 'id_user' in session %}
+        <a href="{{ url_for('usuario') }}"
+        class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel</a>
+        {% else %}
+        <a href="{{ url_for('login_app') }}"
+        class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
+        {% endif %}
       </div>
     </nav>
   </header>
@@ -92,7 +103,8 @@
         </div>
 
         <div class="w3-col l6 w3-padding-large">
-          <img src="../static/images/delivery2.webp" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+          <img src="../static/images/delivery2.webp" class="w3-round w3-image w3-opacity-min" alt="Menu"
+            style="width:100%">
         </div>
       </div>
       <div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
@@ -113,7 +125,8 @@
     <hr>
     <div class="container w3-padding-64" id="contacto">
       <h1>Contact</h1><br>
-      <p>We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste. Do not hesitate to contact us.</p>
+      <p>We offer full-service catering for any event, large or small. We understand your needs and we will cater the
+        food to satisfy the biggerst criteria of them all, both look and taste. Do not hesitate to contact us.</p>
       <form>
         <p><input class="w3-input" type="text" placeholder="Nombre y Apellido" required name="Name"></p>
         <p><input class="w3-input" type="email" placeholder="email" required name="Email"></p>

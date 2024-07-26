@@ -44,7 +44,7 @@ def login_app():
       if user_data[5] == 1:
         session['id_user'] = user[0]
         session['rol'] = 'Admin'
-        return render_template('menu.html')
+        return redirect(url_for('usuario'))
       elif user_data[5] == 0:
         session['id_user'] = user[0]
         order_data = cnx.filter_orderByIDClient()
@@ -55,7 +55,7 @@ def login_app():
         else: 
           order = Order(None, None, datetime.date.today(), 0, user[0])         
           cnx.insert_order(order)    
-        return redirect(url_for('main'))
+        return redirect(url_for('usuario'))
     else:
         Message = 'Error usuario o contraseña inavalida'
         return render_template('login.html', Message= Message)
@@ -63,20 +63,22 @@ def login_app():
 
     return render_template('login.html')
 
+@app.route('/panel-usuario')
+def usuario():
+   if (not('id_user' in session)):
+     return redirect(url_for('main'))
+   return render_template('menu.html')
 
 @app.route('/view_product')
 def view_product():
     # Lógica para mostrar productos
     if (not('id_user' in session)):
-      return render_template('index.html')  
+      return redirect(url_for('main'))
     return render_template('view_product.html', products = cnx.product_findall())
 
 
 @app.route('/filter_bycategory', methods=['GET', 'POST'])
 def filter_bycategory():
-  if (not('id_user' in session)):
-    return render_template('index.html')
-  # Lógica para mostrar productos
   if request.method == 'POST':
       id_category = request.form.get('id_category')
       products = cnx.filter_product_ByIdCategory(id_category)
@@ -91,6 +93,8 @@ def personalized_plate():
 
 @app.route('/perfil_admin')
 def perfil_admin():
+  if (not('id_user' in session and session['id_user']  == "Admin")):
+    return redirect(url_for('main'))
   return render_template('perfil_admin.html')
 
 
@@ -148,7 +152,7 @@ def set_rol_user():
 @app.route('/view_detail')
 def view_detail():
   if (not('id_user' in session)):
-    return render_template('index.html')
+    return redirect(url_for('main'))
   return render_template('view_detail.html', list_products=session.get('datos', []))
 
 
@@ -167,6 +171,7 @@ def insert_detail():
     cnx.setListDetail(prod)
     # Obtener la lista actual de datos desde la sesión (si existe)
     if('datos' in session):
+        
         datos_en_sesion = session.get('datos', [])
 
         # Agregar el nuevo dato a la lista
@@ -183,6 +188,23 @@ def insert_detail():
   else:
     session['msj'] = 'No hay mas stock de este producto'
   return redirect(url_for('main'))
+
+
+@app.route('/eliminar_detail')
+def eliminar_detail():
+  id_product = request.args.get('id_product') 
+  print('id' + str(id_product))
+  prod= cnx.product_findByID(int(id_product))
+  cnx.removeProductoDetail(prod)
+  if('datos' in session):
+        
+    datos_en_sesion = session.get('datos', [])
+
+    datos_en_sesion.remove(prod)
+
+    # Guardar la lista actualizada en la sesión
+    session['datos'] = datos_en_sesion
+  return redirect(url_for('view_detail'))
 
 
 @app.route('/abm_products')
@@ -232,7 +254,7 @@ def delete_product():
   cnx.delete(id_product)
   return redirect(url_for('main'))
 
-
+#FIN DE COMPRA
 @app.route('/finalize_buies')
 def finalize_buies():
   list_prod = []
@@ -241,6 +263,7 @@ def finalize_buies():
     datos_en_sesion = session.get('datos', [])
     for dato in datos_en_sesion:
       cant_product = 0
+      #CANTIDAD DE PRODUCTOS AGREGADOS
       for prod in datos_en_sesion:
         if prod[0] == dato[0]:
           cant_product += 1
@@ -273,7 +296,7 @@ def detail_buies():
 def close_session():
   session.clear()
   cnx.cleanDetail()
-  return render_template('index.html')
+  return redirect(url_for('main'))
 
 if __name__ == "__main__":
   app.debug = True
