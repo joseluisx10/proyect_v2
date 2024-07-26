@@ -16,14 +16,8 @@ cnx = ConnectionSQLite()
 
 @app.route('/')
 def main():
-  msj=None
-  if (not('id_user' in session)):
-    return render_template('index.html')
-  if 'msj' in session:
-    msj = session['msj']
-    session['msj'] = None
-    return render_template('menu.html', msj = msj)
-  return render_template('menu.html', msj= msj)
+  categorys = cnx.category_findall()
+  return render_template('index.html', categorys=categorys)
 
 
 @app.route('/register',  methods=['GET', 'POST'])
@@ -45,29 +39,29 @@ def login_app():
     user = request.form['user']
     password = request.form['password']
     Message = ''
-    if cnx.login(user, password):
-      user = cnx.login(user, password)
-      if user[5] == 1:
+    user_data = cnx.login(user, password)
+    if user_data:
+      if user_data[5] == 1:
         session['id_user'] = user[0]
         session['rol'] = 'Admin'
-        return redirect(url_for('main'))
-      elif user[5] == 0:
+        return render_template('menu.html')
+      elif user_data[5] == 0:
         session['id_user'] = user[0]
-        if cnx.filter_orderByIDClient():
-          data_order = cnx.filter_orderByIDClient()
-          session['id_ord']= data_order[0]
+        order_data = cnx.filter_orderByIDClient()
+        if order_data:
+          session['id_ord']= order_data[0]
           session['rol'] = 'User'
-          order = Order(data_order[0], data_order[1], data_order[2], data_order[3], data_order[4])
+          order = Order(order_data[0], order_data[1], order_data[2], order_data[3], order_data[4])
         else: 
           order = Order(None, None, datetime.date.today(), 0, user[0])         
           cnx.insert_order(order)    
         return redirect(url_for('main'))
     else:
         Message = 'Error usuario o contraseña inavalida'
-        return render_template('index.html', Message= Message)
+        return render_template('login.html', Message= Message)
   else:
 
-    return render_template('index.html', Message = Message)
+    return render_template('login.html')
 
 
 @app.route('/view_product')
@@ -86,7 +80,7 @@ def filter_bycategory():
   if request.method == 'POST':
       id_category = request.form.get('id_category')
       products = cnx.filter_product_ByIdCategory(id_category)
-      return render_template('view_product.html', products = products)
+      return render_template('view_product.html', products = products, id_category = id_category)
   categorys = cnx.category_findall()
   return render_template('filter_bycategory.html',categorys=categorys)
 

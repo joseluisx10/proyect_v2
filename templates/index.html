@@ -1,40 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+  <title>Document</title>
 </head>
-<body class="bg-light"> 
-    <div class="container d-flex w-25 justify-content-center vh-100 align-items-center">     
-        <div class="row rounded bg-white p-2">
-            <div class="mb-4">
-                <h1 class="text-center">Login</h1>
-            </div>          
-            <div class="p-3">
-                <form action="/login" method="post">
-                    <div class="mb-3">
-                      <label for="user" class="form-label">Usuario</label>
-                      <input type="text" class="form-control" id="user" name="user" aria-describedby="user">
-                    </div>
-                    <div class="mb-3">
-                      <label for="password" class="form-label">Contraseña</label>
-                      <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <div class="mb-3">
-                       <div class="form-text"><a href="{{url_for('register') }}">Desea Registrarse?</a></div>
-                    </div>
-                  <div class="mb-3">
-                    <span  role="alert">
-                        <strong>{{ Message }}</strong>
-                    </span>
-                  </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>     
-            </div>
-        </div>
+<style>
+  .menu-link,
+  .w3-text-grey,
+  .h1,
+  .h5,
+  #btn-enviar {
+    font-family: "Amatic SC", sans-serif
+  }
+
+
+.btn-form {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn-form:hover {
+  opacity: 1;
+}
+</style>
+
+<body class="bg-light">
+  <header>
+    <nav class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+      <a class="w3-bar-item w3-button" href="">logo</a>
+      <div class="w3-right w3-hide-small">
+        <a href="{{ url_for('main') }}" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Inicio</a>
+        <a href="#about" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Acerca de Nosotros</a>
+        <a href="#menu" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Menu</a>
+        <a href="#contacto" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Contacto</a>
+        <a href="{{ url_for('login_app') }}" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="w3-display-container">
+      <img class="w-100" src="../static/images/portal.jpg" alt="Lights">
+      <div class="w3-display-topleft w3-container">Top Left</div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <div class="w3-container w3-teal">
+      <h1>Summer 2015</h1>
+    </div>
+
+    <section class="container">
+      <!-- About Section -->
+      <div class="w3-row w3-padding-64" id="about">
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+          <img src="../static/images/plato.jpg" class="w3-round w3-image w3-opacity-min" alt="Table Setting" width="600"
+            height="750">
+        </div>
+
+        <div class="w3-col m6 w3-padding-large">
+          <h1 class="w3-center">About Catering</h1><br>
+          <h5 class="w3-center">Tradition since 1889</h5>
+          <p class="w3-large">The Catering was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur
+            adipiscing elit consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute iruredolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.We only use <span class="w3-tag w3-light-grey">seasonal</span> ingredients.</p>
+          <p class="w3-large w3-text-grey w3-hide-medium">Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod temporincididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.</p>
+        </div>
+      </div>
+      <hr>
+      <div class="w3-row w3-padding-64" id="envio">
+        <div class="w3-col l6 w3-padding-large">
+          <p class="h1 w3-center">Te lo llevamos</p><br>
+          <p class="w3-large">The Catering was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur
+            adipiscing elit consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute iruredolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.We only use <span class="w3-tag w3-light-grey">seasonal</span> ingredients.</p>
+        </div>
+
+        <div class="w3-col l6 w3-padding-large">
+          <img src="../static/images/delivery2.webp" class="w3-round w3-image w3-opacity-min" alt="Menu" style="width:100%">
+        </div>
+      </div>
+      <div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
+        <div class="w3-content">
+
+          <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">THE MENU</h1>
+          <div class="w3-row w3-center w3-border w3-border-dark-grey">
+            {% for category in categorys %}
+            <a class="menu-link" href="javascript:void(0)"
+              onclick="filter_bycategory(event, '{{ category[0] }}');openMenu(event, '{{ category[0] }}');"
+              id="myLink{{ category[0] }}">
+              <div class="w3-col s4 tablink w3-padding-large w3-hover-red">{{ category[1] }}</div>
+            </a>
+            {% endfor %}
+          </div>
+          <div id="result"></div>
+    </section>
+    <hr>
+    <div class="container w3-padding-64" id="contacto">
+      <h1>Contact</h1><br>
+      <p>We offer full-service catering for any event, large or small. We understand your needs and we will cater the food to satisfy the biggerst criteria of them all, both look and taste. Do not hesitate to contact us.</p>
+      <form>
+        <p><input class="w3-input" type="text" placeholder="Nombre y Apellido" required name="Name"></p>
+        <p><input class="w3-input" type="email" placeholder="email" required name="Email"></p>
+        <p><input class="w3-input" type="text" placeholder="Message \ Special requirements" required name="Message"></p>
+        <p><button class="btn-form w3-button w3-section" type="submit">SEND MESSAGE</button></p>
+      </form>
+    </div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  </script>
+  <script>
+    // Tabbed Menu
+    function openMenu(evt, menuName) {
+      var i, x, tablinks;
+      x = document.getElementsByClassName("menu");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+      }
+      document.getElementById(menuName).style.display = "block";
+      evt.currentTarget.firstElementChild.className += " w3-red";
+    }
+
+    function filter_bycategory(evt, id_category) {
+      // Make an AJAX request to search for the employee
+      $.ajax({
+        type: 'POST',
+        url: '{{ url_for("filter_bycategory") }}',
+        data: { 'id_category': id_category },
+        success: function (response) {
+          // Update the content dynamically
+          $('#result').html(response);
+        },
+        error: function (error) {
+          console.log("Error:", error);
+        }
+      });
+    }
+  </script>
 </body>
+
 </html>
