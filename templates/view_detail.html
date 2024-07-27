@@ -1,3 +1,4 @@
+<!--
 <div class="container">
     {% if list_products|length > 0 %}
     <div class="row">
@@ -26,3 +27,40 @@
     <p class="h5">Aun no tiene registrado pedidos</p>
     {% endif %}
 </div>
+-->
+<hr>
+{% if list_products|length > 0 %}
+<div class="w3-container">
+    <h5>Recent Users</h5>
+    <table>
+        <tr>
+            <th>Plato</th>
+            <th>Descripcion</th>
+            <th>Ingredientes</th>
+            <th>Precio</th>
+            <th>Sacar Pedido</th>
+        </tr>
+        {% for product in list_products %}
+        <tr>
+            <td>{{product[1]}}</td>
+            <td>{{product[2]}}</td>
+            <td>{{product[3]}}</td>
+            <td>{{product[5]}}</td>
+            <td>
+                <div>
+                    <a href="{{ url_for('eliminar_detail', id_product = product[0]) }}" class="btn btn-primary"
+                        type="button">Borrar</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <a href="#" onclick="navegar('{{ url_for('finalize_buies') }}', 'finalizar')" class="btn btn-primary" type="button">Comprar</a>
+    </div>
+</div>
+{% else %}
+<div>
+    <p class="h5">Aun no tiene registrado orden</p>
+</div>
+{% endif %}

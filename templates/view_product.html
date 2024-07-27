@@ -37,7 +37,9 @@
   <p class="w3-text-grey">Ingredientes : {{product[4]}}</p>
   <p class="w3-text-grey">Stock: {{product[6]}}</p>
   <p class="w3-text-grey">Ranking: {{product[8]}}</p>
+  {% if 'id_user' in session %}
   <a id="btn-enviar" href="{{ url_for('insert_detail',id_product=product[0]) }}" class="btn btn-primary fs-3">Agregar</a>
+  {% endif %}
 {% endfor %}
 </div>
 {% else %}

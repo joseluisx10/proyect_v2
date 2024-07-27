@@ -51,10 +51,10 @@
           class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Contacto</a>
         {% if 'id_user' in session %}
         <a href="{{ url_for('usuario') }}"
-        class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel</a>
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel</a>
         {% else %}
         <a href="{{ url_for('login_app') }}"
-        class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
+          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
         {% endif %}
       </div>
     </nav>
@@ -109,8 +109,13 @@
       </div>
       <div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
         <div class="w3-content">
-
           <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">THE MENU</h1>
+          {% if session['msj']  %}
+          <div class="alert alert-success" role="alert">
+            <p class="h5">{{session['msj']}}</p>
+          </div>
+          {% set _ = session.pop('msj', None) %}
+          {% endif %}
           <div class="w3-row w3-center w3-border w3-border-dark-grey">
             {% for category in categorys %}
             <a class="menu-link" href="javascript:void(0)"

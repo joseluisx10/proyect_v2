@@ -80,5 +80,7 @@ class CreateTables:
       status INT,
       id_ord INT REFERENCES orders(id_ord)
     )'''
+  
+  
 
 

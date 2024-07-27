@@ -67,7 +67,7 @@ def login_app():
 def usuario():
    if (not('id_user' in session)):
      return redirect(url_for('main'))
-   return render_template('menu.html')
+   return render_template('panel_usuario.html')
 
 @app.route('/view_product')
 def view_product():
@@ -204,7 +204,7 @@ def eliminar_detail():
 
     # Guardar la lista actualizada en la sesión
     session['datos'] = datos_en_sesion
-  return redirect(url_for('view_detail'))
+  return redirect(url_for('usuario'))
 
 
 @app.route('/abm_products')
