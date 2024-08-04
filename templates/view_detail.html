@@ -64,3 +64,12 @@
     <p class="h5">Aun no tiene registrado orden</p>
 </div>
 {% endif %}
+<script type="text/javascript">
+    window.onload = function() {
+        // Check if the page is being loaded for the first time or reloaded
+        if (performance.navigation.type === 1) {
+            // Redirect to another page
+            window.location.href = 'http://127.0.0.1:81/panel-usuario';
+        }
+    }
+  </script>

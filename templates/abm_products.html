@@ -1,9 +1,9 @@
 <div class="container mt-3">
-    <div>
-        <button class="btn btn-primary" type="button" href="#" data-bs-toggle="modal"
+    <div class="">
+        <button class="w3-button w3-green w3-margin-top" type="button" href="#" data-bs-toggle="modal"
             data-bs-target="#modalModificarInsertProduct">Registrar usuario</button>
     </div>
-    <table class="table">
+    <table class="w3-container w3-margin-top">
         <thead>
             <tr>
                 <th scope="col">#ID</th>
@@ -238,3 +238,12 @@
 
     }
 </script>
+<script type="text/javascript">
+    window.onload = function() {
+        // Check if the page is being loaded for the first time or reloaded
+        if (performance.navigation.type === 1) {
+            // Redirect to another page
+            window.location.href = 'http://127.0.0.1:81/panel-admin';
+        }
+    }
+  </script>

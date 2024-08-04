@@ -44,18 +44,20 @@ def login_app():
       if user_data[5] == 1:
         session['id_user'] = user[0]
         session['rol'] = 'Admin'
-        return redirect(url_for('usuario'))
+        session['username'] = user
+        return redirect(url_for('panel_admin'))
       elif user_data[5] == 0:
         session['id_user'] = user[0]
         order_data = cnx.filter_orderByIDClient()
         if order_data:
           session['id_ord']= order_data[0]
           session['rol'] = 'User'
+          session['username'] = user
           order = Order(order_data[0], order_data[1], order_data[2], order_data[3], order_data[4])
         else: 
           order = Order(None, None, datetime.date.today(), 0, user[0])         
           cnx.insert_order(order)    
-        return redirect(url_for('usuario'))
+        return redirect(url_for('panel_usuario'))
     else:
         Message = 'Error usuario o contraseña inavalida'
         return render_template('login.html', Message= Message)
@@ -64,10 +66,17 @@ def login_app():
     return render_template('login.html')
 
 @app.route('/panel-usuario')
-def usuario():
+def panel_usuario():
    if (not('id_user' in session)):
      return redirect(url_for('main'))
    return render_template('panel_usuario.html')
+
+@app.route('/panel-admin')
+def panel_admin():
+   if (not('id_user' in session and session['rol']  == "Admin")):
+     return redirect(url_for('main'))
+   return render_template('panel_admin.html')
+
 
 @app.route('/view_product')
 def view_product():
@@ -91,17 +100,11 @@ def personalized_plate():
   return render_template('personalized_plate.html', categorys=cnx.category_findall())
 
 
-@app.route('/perfil_admin')
-def perfil_admin():
-  if (not('id_user' in session and session['id_user']  == "Admin")):
-    return redirect(url_for('main'))
-  return render_template('perfil_admin.html')
-
-
-@app.route('/perfil_admin/view_user')
+@app.route('/panel_admin/view_user')
 def view_user():
   users = cnx.view_users()
   return render_template('view_users.html', users=users)
+
 
 @app.route('/insert_user', methods = ['GET','POST'])
 def insert_user():
@@ -204,7 +207,7 @@ def eliminar_detail():
 
     # Guardar la lista actualizada en la sesión
     session['datos'] = datos_en_sesion
-  return redirect(url_for('usuario'))
+  return redirect(url_for('panel_usuario'))
 
 
 @app.route('/abm_products')

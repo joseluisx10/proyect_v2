@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -55,10 +57,10 @@
         <div class="w3-bar-block">
             <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
                 onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
-            <a href="#" onclick="navegar('{{ url_for('view_detail') }}', 'Ver pedidos')" class="w3-bar-item w3-button w3-padding"><i class="fa fa-weight-hanging"></i>&nbsp;Mis
-                Pedidos</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa-bowl-rice"></i>&nbsp;Mis gustos</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Armar mi plato</a>
+
+            <a href="#" onclick="navegar('{{ url_for('view_user') }}', 'Ver users')" class="w3-bar-item w3-button w3-padding"><i class="fa-bowl-rice"></i>&nbsp;Ver Usuarios</a>
+            <a href="#" onclick="navegar('{{ url_for('detail_buies') }}', 'Ventas')" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Armar mi plato</a>
+            <a href="#" onclick="navegar('{{ url_for('abm_products') }}', 'productos')" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Ver Productos</a>
             <a href="{{url_for('close_session') }}" class="w3-bar-item w3-button w3-padding"><i
                     class="fa-solid fa-right-from-bracket"></i>&nbsp;Salir</a>
         </div>
@@ -74,6 +76,10 @@
             <!-- Add your page content here -->
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  </script>
     <script>
         // Get the Sidebar
         var mySidebar = document.getElementById("mySidebar");

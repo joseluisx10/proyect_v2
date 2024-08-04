@@ -49,13 +49,16 @@
           class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Menu</a>
         <a href="#contacto"
           class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Contacto</a>
-        {% if 'id_user' in session %}
-        <a href="{{ url_for('usuario') }}"
-          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel</a>
-        {% else %}
-        <a href="{{ url_for('login_app') }}"
-          class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
-        {% endif %}
+          {% if 'id_user' in session and session['rol'] == "User" %}
+          <a href="{{ url_for('panel_usuario') }}"
+            class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel Usuario</a>
+          {% elif 'id_user' in session and session['rol'] == "Admin" %}
+          <a href="{{ url_for('panel_admin') }}"
+            class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Panel</a>
+          {% else %}
+          <a href="{{ url_for('login_app') }}"
+            class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-green">Ingresar</a>
+          {% endif %}
       </div>
     </nav>
   </header>
