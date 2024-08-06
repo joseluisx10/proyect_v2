@@ -1,7 +1,7 @@
 <div class="container mt-3">
     <div class="">
         <button class="w3-button w3-green w3-margin-top" type="button" href="#" data-bs-toggle="modal"
-            data-bs-target="#modalModificarInsertProduct">Registrar usuario</button>
+            data-bs-target="#modalModificarInsertProduct"><strong class="w3-black me-2">+</strong>Producto</button>
     </div>
     <table class="w3-container w3-margin-top">
         <thead>
@@ -115,7 +115,7 @@
         <div class="modal-dialog  modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title" id="exampleModalLabel2">Modificar Producto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Crear Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ url_for('insert_product')}}" method="POST">

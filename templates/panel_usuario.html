@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Document</title>
 </head>
 
 <style>
+    body {
+        font-family: "Amatic SC", sans-serif;
+        font-size: 21px;
+        text-decoration: double;
+    }
+
     table {
         border-collapse: collapse;
         border-spacing: 0;
@@ -34,7 +41,7 @@
     <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
         <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
             onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
-        <span class="w3-bar-item w3-right">Logo</span>
+        <span class="w3-bar-item w3-right">HealthyBite</span>
     </div>
 
     <!-- Sidebar/menu -->
@@ -55,12 +62,26 @@
         <div class="w3-bar-block">
             <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
                 onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
-            <a href="#" onclick="navegar('{{ url_for('view_detail') }}', 'Ver pedidos')" class="w3-bar-item w3-button w3-padding"><i class="fa fa-weight-hanging"></i>&nbsp;Mis
+            <a href="#" onclick="navegar('{{ url_for('view_detail') }}', 'Ver pedidos')"
+                class="w3-bar-item w3-button w3-padding"><i class="fa fa-weight-hanging"></i>&nbsp;Mis
                 Pedidos</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa-bowl-rice"></i>&nbsp;Mis gustos</a>
+            <a href="#" onclick="navegar('{{ url_for('view_mylikes') }}', 'Ver Mis Gustos')"
+                class="w3-bar-item w3-button w3-padding"><i class="fa-bowl-rice"></i>&nbsp;Mis gustos</a>
             <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Armar mi plato</a>
             <a href="{{url_for('close_session') }}" class="w3-bar-item w3-button w3-padding"><i
                     class="fa-solid fa-right-from-bracket"></i>&nbsp;Salir</a>
+            <hr>
+            <br>
+            <div class="w3-bar-block w3-round w3-white">
+                <div class="w3-container">
+                    <p>Mis Like</p>
+                    <p>
+                        {% for mylike in mylikes %}
+                        <span class="w3-tag w3-theme-d5">{{mylike[1]}}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
         </div>
     </nav>
     <!-- Overlay effect when opening sidebar on small screens -->
@@ -101,7 +122,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         function navegar(ruta, titulo) {
             $.ajaxSetup({ cache: false });
@@ -113,6 +134,32 @@
                     history.pushState({ path: ruta }, titulo, ruta);
                 }
             });
+        }
+        function toggleLike(ruta, buttonId) {
+            $.ajaxSetup({ cache: false });
+            $.ajax({
+                type: 'GET',
+                url: ruta,
+                success: function (response) {
+                    if (response.success) {
+                        cambiarColorBoton(response.action, buttonId);
+                    }
+                }
+            });
+        }
+
+
+
+        function cambiarColorBoton(action, buttonId) {
+            var button = document.getElementById(buttonId);
+            console.log(action)
+            if (action === 'insert') {
+                button.classList.add('w3-green');
+                button.classList.remove('w3-yellow');
+            } else if (action === 'delete') {
+                button.classList.add('w3-yellow');
+                button.classList.remove('w3-green');
+            }
         }
     </script>
 </body>

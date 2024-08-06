@@ -1,37 +1,7 @@
-<!--
-<div class="container">
-    {% if list_products|length > 0 %}
-    <div class="row">
-        {% for product in list_products %}
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card_title h5">{{product[1]}}</h5>
-                        <p class="card-text">{{product[2]}}</p>
-                        <p class="card-text">Ingredientes : {{product[3]}}</p>
-                        <p class="card-text">{{product[5]}}$</p>
-                        <p class="card-text">Stock: {{product[6]}}</p>
-                        <p class="card-text">Ranking: {{product[8]}}</p>
-                        <div>
-                            <a href="{{ url_for('eliminar_detail', id_product = product[0]) }}" class="btn btn-primary" type="button">Comprar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-        <div>
-            <a href="#" onclick="navegar('{{ url_for('finalize_buies') }}', 'finalizar')" class="btn btn-primary" type="button">Comprar</a>
-        </div>
-    </div>    
-    {% else %}
-    <p class="h5">Aun no tiene registrado pedidos</p>
-    {% endif %}
-</div>
--->
 <hr>
 {% if list_products|length > 0 %}
 <div class="w3-container">
-    <h5>Recent Users</h5>
+    <h5>MIS PEDIDOS</h5>
     <table>
         <tr>
             <th>Plato</th>
@@ -40,23 +10,32 @@
             <th>Precio</th>
             <th>Sacar Pedido</th>
         </tr>
+        {% set total = 0.0|float %}
         {% for product in list_products %}
         <tr>
             <td>{{product[1]}}</td>
             <td>{{product[2]}}</td>
             <td>{{product[3]}}</td>
-            <td>{{product[5]}}</td>
+            <td>${{product[5]}}</td>
             <td>
                 <div>
-                    <a href="{{ url_for('eliminar_detail', id_product = product[0]) }}" class="btn btn-primary"
+                    <a href="{{ url_for('eliminar_detail', id_product = product[0]) }}" class="w3-button w3-red"
                         type="button">Borrar</a>
                 </div>
             </td>
         </tr>
+        {% set price = product[5]|float %}
+        {% set total = total + price %}
+      
         {% endfor %}
+        <tr>
+            <td colspan="3" class="w3-right-align"><strong>Total:</strong></td>
+            <td>${{total}}</td>
+            <td></td>
+        </tr>
     </table>
     <div>
-        <a href="#" onclick="navegar('{{ url_for('finalize_buies') }}', 'finalizar')" class="btn btn-primary" type="button">Comprar</a>
+        <a href="#" onclick="navegar('{{ url_for('finalize_buies') }}', 'finalizar')" class="w3-button w3-green" type="button">Comprar</a>
     </div>
 </div>
 {% else %}

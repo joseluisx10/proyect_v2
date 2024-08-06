@@ -36,7 +36,7 @@
     <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
         <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
             onclick="w3_open();"><i class="fa fa-bars"></i> &nbsp;Menu</button>
-        <span class="w3-bar-item w3-right">Logo</span>
+        <span class="w3-bar-item w3-right">HealthyBite</span>
     </div>
 
     <!-- Sidebar/menu -->
@@ -59,7 +59,6 @@
                 onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp;Close Menu</a>
 
             <a href="#" onclick="navegar('{{ url_for('view_user') }}', 'Ver users')" class="w3-bar-item w3-button w3-padding"><i class="fa-bowl-rice"></i>&nbsp;Ver Usuarios</a>
-            <a href="#" onclick="navegar('{{ url_for('detail_buies') }}', 'Ventas')" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Armar mi plato</a>
             <a href="#" onclick="navegar('{{ url_for('abm_products') }}', 'productos')" class="w3-bar-item w3-button w3-padding"><i class="fa-utensils"></i>&nbsp;Ver Productos</a>
             <a href="{{url_for('close_session') }}" class="w3-bar-item w3-button w3-padding"><i
                     class="fa-solid fa-right-from-bracket"></i>&nbsp;Salir</a>

@@ -81,6 +81,12 @@ class CreateTables:
       id_ord INT REFERENCES orders(id_ord)
     )'''
   
+  def create_table_mylikes(self):
+    return '''CREATE TABLE IF NOT EXISTS mylikes (
+      id_mylikes INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      id_user INT REFERENCES user(id_user)
+    )'''
   
 
 

@@ -1,0 +1,45 @@
+<div class="w3-center">
+    <h2>GRACIAS POR SU COMPRA</h2>
+</div>
+</div>
+
+<div class="w3-row-padding">
+
+    <div class="w3-half">
+        
+    </div>
+
+    <div class="w3-half">
+        <div class="w3-card white">
+            <div class="w3-container w3-theme">
+                <h3>Theme</h3>
+            </div>
+            <div class="w3-container">
+                <h3 class="w3-text-theme">Resume de compra</h3>
+            </div>
+            <ul class="w3-ul w3-border-top">
+                {% for order in orders %}
+                <li>
+                    <h3>Plato</h3>
+                    <p>{{order[0]}}</p>
+                </li>
+                
+                <li>
+                    <h3>Precio Unitario</h3>
+                    <p><p>{{order[1]}}</p></p>
+                </li>
+                <li>
+                    <h3>Cantidad</h3>
+                    <p>{{order[2]}}</p>                
+                </li>
+                <li>
+                    <h3>Precio total</h3>
+                    <p>{{order[3]}}</p>                
+                </li>
+                <hr><br>
+                {% endfor %}
+            </ul>
+           
+        </div>
+    </div>
+</div>

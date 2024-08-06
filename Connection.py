@@ -1,5 +1,6 @@
 import sqlite3
 from flask import session
+import datetime
 
 #INTENTO DE APLICAR SINGLETON 
 class ConnectionSQLite(object):
@@ -59,6 +60,12 @@ class ConnectionSQLite(object):
             '''SELECT * FROM user WHERE username = ? AND password = ?''',
             (user, passw))    
         return user_data
+    
+    def login_test(self, user, passw):
+        user_data =  self.one_fetch_data(
+        '''SELECT * FROM test_user WHERE username = ? AND password = ?''',
+        (user, passw))    
+        return user_data
 
 
 
@@ -75,6 +82,11 @@ class ConnectionSQLite(object):
         self.execute_query(query, user_data)
 
     
+    def insert_user_test(self, user):
+        user_data = (user.username, user.email, user.password, user.date, user.role)
+        query = '''INSERT INTO test_user (username, email, password, date, role) VALUES (?, ?, ?, ?, ?)'''
+        self.execute_query(query, user_data)
+
 
     #EDITAR USUARIO
     def edit_user(self, id, user):
@@ -96,7 +108,7 @@ class ConnectionSQLite(object):
 
     #FITRAR ODEN DE COMPRA
     def filter_orderByIDClient(self):
-        return self.one_fetch_data("SELECT * FROM orders WHERE id_user = ?", (session['id_user'],))
+        return self.one_fetch_data("SELECT * FROM orders WHERE id_user = ? and date = ?", (session['id_user'], datetime.date.today()))
     
     
     #SETEAR PRECIO TOTAL Y STATUS DE COMPRA EN LA TABLA ORDER (ORDEN DE COMPRA)
@@ -175,3 +187,21 @@ class ConnectionSQLite(object):
     #FILTRAR POR CATEGORIA
     def filter_product_ByIdCategory(self, id_category):
         return self.fetch_data("SELECT * FROM product WHERE id_category = ?", (id_category, ))
+    
+    
+    def insert_like(self, mylike):
+        value = (mylike, session['id_user'])
+        query = '''INSERT INTO mylikes(name, id_user) VALUES(?, ?)'''
+        return self.execute_query(query, value)
+    
+    def delete_like(self, mylike):
+        return self.execute_query("DELETE FROM mylikes WHERE name = ? and id_user = ?", (mylike, session['id_user'],))
+    
+    def get_all_likes(self):
+        return self.fetch_data("SELECT * FROM mylikes WHERE id_user = ?", (session['id_user'],))
+    
+    #COMPRA
+    def get_buies(self):
+        return self.fetch_data("SELECT product.name, deatail.price, deatail.quantity, orders.price_tot from orders inner join deatail on orders.id_ord =  deatail.id_ord inner join product on deatail.id_product = product.id_product where orders.id_user = ? and orders.date = ?", (session['id_user'], datetime.date.today()))
+    
+    
