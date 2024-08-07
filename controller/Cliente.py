@@ -1,11 +1,11 @@
-from ProductConnection import ProductConnection
-from Detail import Detail
+from modelos.ProductConnection import ProductConnection
+from entities.Detail import Detail
 import datetime
 from UserConnection import UserConnection
 
 
-from User import User
-
+from entities.User import User
+#PROCESO PARA CORRER EN LA TERMINAL NO PERTECE A LA APLICACION WEB
 #ADMINISTRACION DEL USUARIO COMUN O CLIENTE
 class Cliente(User):
 

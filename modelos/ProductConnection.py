@@ -1,4 +1,4 @@
-from Connection import ConnectionSQLite
+from modelos.Connection import ConnectionSQLite
 
 class ProductConnection:
 

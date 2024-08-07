@@ -1,10 +1,10 @@
-from User import User
+from entities.User import User
 import datetime
-from Product import Product
-from ProductConnection import ProductConnection
+from controller.Product import Product
+from modelos.ProductConnection import ProductConnection
 from UserConnection import UserConnection
-from Category import Category
-
+from entities.Category import Category
+#PROCESO PARA CORRER EN LA TERMINAL 
 class Admin(User):
 
     def __init__(self, id_user, username , email, password, date, role):

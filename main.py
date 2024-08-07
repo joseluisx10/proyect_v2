@@ -1,13 +1,15 @@
-from Connection import ConnectionSQLite
-from bd import CreateTables
+from modelos.Connection import ConnectionSQLite
+from modelos.bd import CreateTables
 from UserConnection import UserConnection
 import datetime
-from User import User
-from Order import Order
-from Detail import Detail
-from Product import Product
+from entities.User import User
+from entities.Order import Order
+from entities.Detail import Detail
+from entities.Product import Product
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import re
+
+#CODIGO EN CRUDO CONTROLLER PAGINA WEB
 
 app = Flask(__name__)
 app.secret_key = 'tu_clave_secreta'  # Asegúrate de cambiar esto en un entorno de producción
