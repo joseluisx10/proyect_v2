@@ -151,7 +151,7 @@ def personalized_plate():
 @app.route('/panel_admin/view_user')
 def view_user():
   users = cnx.view_users()
-  return render_template('view_users.html', users=users)
+  return render_template('/admin/view_users.html', users=users)
 
 
 @app.route('/insert_user', methods = ['GET','POST'])
@@ -204,7 +204,7 @@ def set_rol_user():
 def view_detail():
   if (not('id_user' in session)):
     return redirect(url_for('main'))
-  return render_template('view_detail.html', list_products=session.get('datos', []))
+  return render_template('/usuario/view_detail.html', list_products=session.get('datos', []))
 
 
 @app.route('/insert_detail')
@@ -262,7 +262,7 @@ def eliminar_detail():
 def abm_products():
   products = cnx.product_findall()
   categorys = cnx.category_findall()
-  return render_template('abm_products.html', products=products, categorys=categorys)
+  return render_template('/admin/abm_products.html', products=products, categorys=categorys)
 
 
 @app.route('/insert_product', methods = ['GET','POST'])
@@ -335,7 +335,7 @@ def finalize_buies():
 @app.route('/resumen_compra', methods=['GET', 'POST'])
 def resumen_compra():
    orders = cnx.get_buies()
-   return render_template('car_buies.html', orders=orders)
+   return render_template('/usuario/car_buies.html', orders=orders)
 
 @app.route('/detail_buies', methods=['GET', 'POST'])
 def detail_buies():
@@ -352,7 +352,7 @@ def detail_buies():
 def view_mylikes():
   categorys = cnx.category_findall()
   mylikes = cnx.get_all_likes()
-  return render_template('view_mylikes.html', categorys = categorys, mylikes=mylikes)
+  return render_template('/usuario/view_mylikes.html', categorys = categorys, mylikes=mylikes)
 
 
 @app.route('/toggle_like', methods=['GET', 'POST'])
